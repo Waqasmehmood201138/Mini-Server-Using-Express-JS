@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server</title>
+
+</head>
+
+<body>
+
+    <button onclick="showAdminData()">Admin Data</button>
+
+    <div id="result">
+
+    </div>
+
+    <script>
+        function showAdminData() {
+            axios.get('http://localhost:3000/admin')
+                .then(function (response) {
+                    // handle success
+                    const data = response.data
+                    let adminData = document.getElementById("result")
+                    adminData.innerHTML=`
+                    Username : ${data.username} <br>
+                    Password : ${data.password}
+                    `;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
