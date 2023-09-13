@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign me up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+</style>
+
+<body>
+
+    <div class="container center-form">
+        <div class="col-md-6">
+            <h2 class="mb-4">Signup</h2>
+            <form onsubmit="signup(event);">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <label for="" id="dup_email"></label>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="button" class="btn btn-secondary" id="signInButton">Sign In</button>
+                <label for="" id="user_created"></label>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+    function signup(event) {
+
+
+        event.preventDefault();
+
+        let fullName = document.getElementById('fullName').value;
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+
+        let dup_email = document.getElementById('dup_email');
+        let user_created = document.getElementById('user_created');
+        
+        
+
+        axios.post('http://localhost:3000/signup', {
+
+            fullName,
+            email,
+            password,
+
+        })
+            .then(function (response) {
+                // console.log(response.data);
+                user_created.innerHTML = response.data.message;
+            })
+            .catch(function (error) {
+                // console.log(error.response.data.message);
+                dup_email.innerHTML = error.response.data.message;
+            });
+
+            
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>
